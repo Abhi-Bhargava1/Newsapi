@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" rel="stylesheet">
+  <title>News</title>
+  <body>
+    <form class="search" action = "",>
+      <label for="">Search for your latest news here!</br></label>
+      <label for=""> Please select a category: </label>
+      <input id = "rd1" name = "group1" type = "radio"
+      value = "Technology">Technology</input><br>
+      <input id = "rd2" name = "group1" type = "radio"
+      value = "Sports">Sports</input><br>
+      <input id = "rd3" name = "group1" type = "radio"
+      value = "Entertainment">Entertainment</input><br>
+      <label for=""> Search: </label>
+      <label for=""> Note: may be left blank. </label>
+      <input type="text" id="keyword" name="keyword"><br><br>
+      <label for=""> Country:  </label>
+      <select name="country" id="country">
+        <option value = "global">Global News</option>
+        <option value="us">USA</option>
+        <option value="ar">Argentina</option>
+        <option value="au">Australia</option>
+        <option value="at">Austria</option>
+        <option value="be">Belgium</option>
+        <option value="br">Brazil</option>
+        <option value="bg">Bulgaria</option>
+        <option value="ca">Canada</option>
+        <option value="cn">China</option>
+        <option value="co">Colombia</option>
+        <option value="cu">Cuba</option>
+        <option value="cz">Czech Republic</option>
+        <option value="eg">Egypt</option>
+        <option value="fr">France</option>
+        <option value="de">Germany</option>
+        <option value="gr">Greece</option>
+        <option value="hk">Hong Kong</option>
+        <option value="hu">Hungary</option>
+        <option value="in">India</option>
+        <option value="id">Indonesia</option>
+        <option value="ie">Ireland</option>
+        <option value="il">Israel</option>
+        <option value="it">Italy</option>
+        <option value="jp">Japan</option>
+        <option value="lv">Latvia</option>
+        <option value="lt">Lithuania</option>
+        <option value="my">Malaysia</option>
+        <option value="mx">Mexico</option>
+        <option value="ma">Morocco</option>
+        <option value="nl">Netherlands</option>
+        <option value="nz">New Zealand</option>
+        <option value="ng">Nigeria</option>
+        <option value="no">Norway</option>
+        <option value="ph">Phillipines</option>
+        <option value="pl">Poland</option>
+        <option value="pt">Portugal</option>
+        <option value="ro">Romania</option>
+        <option value="ru">Russia</option>
+        <option value="sa">Saudi Arabia</option>
+        <option value="rs">Serbia</option>
+        <option value="sg">Singapore</option>
+        <option value="sk">Slovakia</option>
+        <option value="si">Slovenia</option>
+        <option value="za">South Africa</option>
+        <option value="kr">South Korea</option>
+        <option value="se">Sweden</option>
+        <option value="ch">Switzerland</option>
+        <option value="tw">Taiwan</option>
+        <option value="th">Thailand</option>
+        <option value="tr">Turkey</option>
+        <option value="ae">UAE</option>
+        <option value="ua">Ukraine</option>
+        <option value="gb">United Kingdom</option>
+        <option value="ve">Venuzuela</option>
+      </select>
+      <br>
+      <button handleclick="retrieve()" id = "btn1">Submit</button>
+    </form>
+  </body>
+  <style> 
+    body {
+      background-color: #fff;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .search {
+      position: absolute;
+      top: 20%;
+      right: 2%;
+    }
+    #btn1 {
+      background-color: rgb(248, 80, 80); 
+    }
+    .label {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1c87c9;
+      }
+    .news-widget {
+      width: 900px;
+      height: 650px;
+      border: 1px solid #999;
+      border-top: 5px solid #FA5000;
+      border-bottom: 5px solid #aaa;
+      margin: 100px;
+      background-color: #fff;
+    }
+    .content-area {
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+
+    a {
+      color: #0aa6af;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    a:hover {
+      color: #088a91;
+      font-weight: bold;
+    }
+    .published {
+      margin-top: 9px;
+      font-size: 11px;
+    }
+    p.description {
+      margin-top: 12px;
+      font-size: 11px;
+    }
+
+    h4 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    h5 {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      font-weight: 600;
+      color: #333;
+      font-size: 11px;
+    }
+
+    .news-widget-footer {
+      display: grid;
+      grid-template-columns: 33% 33% 33%;
+      width: 100%;
+      bottom: 4px;
+      height: 30px;
+    }
+
+    .news-widget-footer-next {
+      width: 100%;
+      text-align: right;
+      bottom: 2px;
+      padding-right: 15px;
+      font-size: 12px;
+      z-index: 2;
+      color: blue;
+      font-weight: 600;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    .news-widget-footer-prev {
+      text-align: left;
+      bottom: 2px;
+      font-size: 12px;
+      z-index: 2;
+      color: blue;
+      font-weight: 600;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+
+    .news-widget-footer-next:hover, .news-widget-footer-prev:hover {
+      color: #0aa6af;
+    }
+
+    .newsArticle-details-listings{
+      margin-top: 5px;
+      display: grid;
+      grid-template-rows: 20% 20% 20% 20% 20%;
+      grid-row-gap: 2px;
+      height: 525px;
+
+    }
+
+    .newsArticle-details-0, .newsArticle-details-1, .newsArticle-details-2, .newsArticle-details-3, .newsArticle-details-4 {
+      overflow: hidden;
+      border-top: 1px solid #aaa;
+      padding-bottom: 8px;
+    }
+
+    .num-news {
+      margin-top: 4px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="news-widget">
+  <div class="content-area">
+
+    <h4>VIEW TOP HEADLINES HERE!</h4>
+
+    <div class="newsArticle-details-listings">
+
+      <div class="newsArticle-details-0"></div>
+      <div class="newsArticle-details-1"></div>
+      <div class="newsArticle-details-2"></div>
+      <div class="newsArticle-details-3"></div>
+      <div class="newsArticle-details-4"></div>
+
+    </div> <!-- END class="newsArticle-details-listings" -->
+
+    <div class="news-widget-footer">
+      <div class="news-widget-footer-prev" onClick="prevFive()"></div>
+      <div class="num-news"></div>
+      <div class="news-widget-footer-next" onClick="nextFive()">Next 5 ></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  const searchFrom = document.querySelector('.search');
+  const input = document.querySelector('.input');
+  let fivenews = []
+  let startIndex = 0
+  let newsDataJSON = {}
+  let lengthOfData = 0
+
+  searchFrom.addEventListener('submit',retrieve)
+
+  function set_category(a,b,c){
+    if(a.checked == true){
+      return a.value
+    }
+    else if(b.checked == true){
+      return b.value
+    }
+    else if(c.checked == true){
+      return c.value
+    }
+    else
+      alert("No category selected. Please select a category, and then click submit.");
+  }
+
+  function set_country(country_value){
+    if(country_value == "global"){
+      return ""
+    }
+    else
+      return "&country=" + country_value
+  }
+  function retrieve(e){
+
+    e.preventDefault();
+    var rd1 = document.getElementById("rd1");
+    var rd2 = document.getElementById("rd2");
+    var rd3 = document.getElementById("rd3");
+
+    user_category = set_category(rd1,rd2,rd3)
+
+    let country_code = country.value
+ 
+    
+    let search_keyword = keyword.value
+
+    var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+
+    var url = 'http://newsapi.org/v2/top-headlines?' + 
+    'category=' + user_category +
+    "&country=" + country.value +
+    '&pageSize=100' + 
+    '&q=' + search_keyword + '&sortBy=publishedAt&apiKey=78b9d599c4f94f8fa3afb1a5458928d6'
+
+    console.log(url)
+
+        fetch(url).then((res)=>{
+          return res.json()
+          }).then((data)=>{
+              console.log(data)
+              newsDataJSON = data
+            console.log(newsDataJSON)
+            lengthOfData = newsDataJSON.articles.length
+        getFiveRecords()
+        })
+  }
+
+  function getFiveRecords(){
+    let newsOutput = ''
+    let maxLength = 130
+    let shortDesc = ''
+    let maxTitleLength = 100
+    let newsArticle = []
+
+    for(i = 0; i < 5; i++ ){
+      let widgetOutput = {}
+
+      if(startIndex+i < lengthOfData){
+        newsArticle = newsDataJSON.articles[startIndex+i]
+        console.log("\n", startIndex+i, newsDataJSON.articles[startIndex+i])
+        widgetOutput["Title"] = newsArticle.Title
+
+        // Allow a maximum length of maxTitleLength for each title
+        if (newsArticle.title.length > maxTitleLength){
+          truncTitle = newsArticle.title.substring(0, maxTitleLength)
+        } else {
+          truncTitle = newsArticle.title
+        }
+        widgetOutput["truncTitle"] = truncTitle
+
+        if (newsArticle.description != null){
+        
+            // Allow a maximum length of maxLength for each description
+            if (newsArticle.description.length > maxLength){
+              shortDesc = newsArticle.description.substring(0, maxLength)
+              shortDesc += "..."
+            } else {
+              shortDesc = newsArticle.description
+            }
+        }
+        else
+            shortDesc = "No description available."
+            
+        widgetOutput["ShortDescription"] = shortDesc
+        widgetOutput["newsArticleName"] = newsArticle.source.name
+        console.log("Abhi B")
+        console.log(newsArticle.urlToImage)
+        widgetOutput["news_image"] = newsArticle.urlToImage
+        if(newsArticle.author == null || newsArticle.author == ""){
+          widgetOutput["Author"] = "Unknown."
+        }
+        else
+          widgetOutput["Author"] = newsArticle.author
+        widgetOutput["DatePublished"] = newsArticle.publishedAt.substring(0,10)
+        widgetOutput["Link"] = newsArticle.url
+        console.log('widgetOutput:', widgetOutput)
+
+      } else {
+        newsArticle = false
+      }
+      // build HTML output
+      if(newsArticle){
+        newsOutput = '<img src="' + widgetOutput.news_image + '" alt="Image not displayable." align="right" valign="middle" style="width:100px;height:100px;"/>'
+        + '<a href="' + widgetOutput.Link + '" title="' + widgetOutput.Title + '">' + widgetOutput.truncTitle + 
+        '</a><h5>' + 
+            'Source: ' + widgetOutput.newsArticleName + '</br>' + 'Date Published: ' + widgetOutput.DatePublished + 
+          '</br>' + 'Author: ' + widgetOutput.Author + '</h5><p class="description">' + widgetOutput.ShortDescription 
+            + '</p>' 
+        $(".newsArticle-details-" + i.toString()).html(newsOutput) 
+      } else {
+        $(".newsArticle-details-" + i.toString()).html('')
+      }
+
+      // If we're at the beginning of the list, don't show 'Prev 5'
+      let prev = ''
+      if(startIndex === 0){
+        $('.news-widget-footer-prev').html(prev) 
+      } else {
+        prev = 'Prev 5'
+        $('.news-widget-footer-prev').html(prev)
+      }
+
+      // Show a map of where we are in the data set "1 - 5" of 90 for example
+      let plusFive = startIndex+5
+      let plusOne = startIndex+1
+      if (plusFive > lengthOfData){
+        plusFive = lengthOfData
+      }
+      let map = '<center>' + plusOne + ' - ' + plusFive + ' of ' + lengthOfData + '</center>'
+      $('.num-news').html(map)
+
+    }
+  }
+
+  // When the 'Next 5' link is clicked, advance to the next five newsArticle listings
+  function nextFive(){
+    startIndex += 5
+    if(startIndex >= lengthOfData){
+      startIndex = 0 // start over
+    }
+    console.log("Get the next five.", startIndex)
+    getFiveRecords()
+  }
+
+  // When the 'Prev 5' link is clicked, display the previous five newsArticle listings
+  function prevFive(){
+    startIndex -= 5
+    if(startIndex < 0){
+      startIndex = 0  // start over
+    }
+    console.log("Get the prev five.", startIndex)
+    getFiveRecords()
+  } 
+
+
+</script>
+
+</body>
+</html>
