@@ -89,7 +89,7 @@
     .search {
       position: absolute;
       top: 20%;
-      right: 2%;
+      right: 10%;
     }
     #btn1 {
       background-color: rgb(248, 80, 80); 
@@ -207,7 +207,7 @@
 </head>
 <body>
 
-<div class="news-widget"> 
+<div class="news-widget">  <!-- Table for viewing headlines. This allows us to view 5 at a time. -->
   <div class="content-area">
 
     <h4>VIEW TOP HEADLINES HERE!</h4>
@@ -220,7 +220,7 @@
       <div class="newsArticle-details-3"></div>
       <div class="newsArticle-details-4"></div>
 
-    </div> <!-- END class="newsArticle-details-listings" -->
+    </div> 
 
     <div class="news-widget-footer">
       <div class="news-widget-footer-prev" onClick="prevFive()"></div>
@@ -235,7 +235,7 @@
 <script>
 
   const searchFrom = document.querySelector('.search');
-  const input = document.querySelector('.input');
+  //const input = document.querySelector('.input');
   let fivenews = []
   let startIndex = 0
   let newsDataJSON = {}
@@ -278,8 +278,6 @@
     
     let search_keyword = keyword.value
 
-    var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
-
     var url = 'https://newsapi.org/v2/top-headlines?' + 
     'category=' + user_category +
     "&country=" + country.value +
@@ -303,7 +301,7 @@
     let newsOutput = ''
     let maxLength = 130
     let shortDesc = ''
-    let maxTitleLength = 100
+    let maxTitleLength = 70
     let newsArticle = []
 
     for(i = 0; i < 5; i++ ){
@@ -337,8 +335,6 @@
             
         widgetOutput["ShortDescription"] = shortDesc
         widgetOutput["newsArticleName"] = newsArticle.source.name
-        console.log("Abhi B")
-        console.log(newsArticle.urlToImage)
         widgetOutput["news_image"] = newsArticle.urlToImage
         if(newsArticle.author == null || newsArticle.author == ""){
           widgetOutput["Author"] = "Unknown."
@@ -354,7 +350,7 @@
       }
       // build HTML output
       if(newsArticle){
-        newsOutput = '<img src="' + widgetOutput.news_image + '" alt="Image not displayable." align="right" valign="middle" style="width:100px;height:100px;"/>'
+        newsOutput = '<img src="' + widgetOutput.news_image + '" alt="Image not available." align="right" valign="middle" style="width:100px;height:100px;"/>'
         + '<a href="' + widgetOutput.Link + '" title="' + widgetOutput.Title + '">' + widgetOutput.truncTitle + 
         '</a><h5>' + 
             'Source: ' + widgetOutput.newsArticleName + '</br>' + 'Date Published: ' + widgetOutput.DatePublished + 
