@@ -12,3 +12,5 @@ Once the user has made their selections, they need to press submit and their new
 Up to 100 articles are displayed. Five articles are displayed at a time, and the user can click "next 5" or "prev 5" to go back and forth.
 Clicking a link will open the news article in a new tab. If the user would like to search for more articles, they may reenter their desired
 entries and click submit once again. 
+
+Link: https://abhi-bhargava1.github.io/Newsapi/MainWebApp.html
